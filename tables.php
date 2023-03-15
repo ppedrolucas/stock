@@ -1,3 +1,12 @@
+<?php
+ob_start(); //ARMAZENA MEUS DADOS EM CACHE
+session_start(); //INICIA A SESSÃO
+if(!isset($_SESSION['loginUser']) && (!isset($_SESSION['passUser']))){
+    header("Location: users.php?acao=negado");
+    exit;
+}
+include_once('config/sair.php');
+?>
 <!doctype html>
 <html class="no-js h-100" lang="en">
   <head>
@@ -36,31 +45,26 @@
           <div class="nav-wrapper">
             <ul class="nav flex-column">
               <li class="nav-item">
-                <a class="nav-link " href="index.html">
+                <a class="nav-link " href="home.php">
                   <i class="fa-sharp fa-solid fa-house"></i>
-                  <span>Página Prindipal</span>
+                  <span>Página Principal</span>
                 </a>
               </li>
               
               
               <li class="nav-item">
-                <a class="nav-link active" href="users.html">
-                  <i class="fa-sharp fa-solid fa-users-gear"></i>
+                <a class="nav-link " href="users.php">
+                <i class="fa-sharp fa-solid fa-users"></i>
                   <span>Tablela usuários</span>
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="tables.html">
+                <a class="nav-link active" href="tables.php">
                   <i class="material-icons">table_chart</i>
                   <span>Tablela de serviços</span>
                 </a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link " href="user-profile-lite.html">
-                  <i class="material-icons">person</i>
-                  <span>Perfil</span>
-                </a>
-              </li>
+              
               
             </ul>
           </div>
@@ -81,10 +85,10 @@
                     <span class="d-none d-md-inline-block">Sierra Brooks</span>
                   </a>
                   <div class="dropdown-menu dropdown-menu-small">
-                    <a class="dropdown-item" href="user-profile-lite.html">
-                      <i class="material-icons">&#xE7FD;</i> Profile</a>
+                    <!--<a class="dropdown-item" href="user-profile-lite.html">
+                      <i class="material-icons">&#xE7FD;</i> Profile</a>-->
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item text-danger" href="#">
+                    <a class="dropdown-item text-danger" href="?sair">
                       <i class="material-icons text-danger">&#xE879;</i> Logout </a>
                   </div>
                 </li>
@@ -102,7 +106,7 @@
             <div class="page-header row no-gutters py-4">
               <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
                 <span class="text-uppercase page-subtitle">Sistema de estoque</span>
-                <h3 class="page-title">Usuários cadastrados</h3>
+                <h3 class="page-title">Tabela de serviços</h3>
               </div>
             </div>
             <!-- End Page Header -->
@@ -111,53 +115,63 @@
               <div class="col">
                 <div class="card card-small mb-4">
                   <div class="card-header border-bottom">
-                    <h6 class="m-0">Usuários</h6>
+                    <h6 class="m-0">Serviços</h6>
                   </div>
                   <div class="card-body p-0 pb-3 text-center">
                     <table class="table mb-0">
                       <thead class="bg-light">
                         <tr>
                           <th scope="col" class="border-0">#</th>
-                          <th scope="col" class="border-0">Nome</th>
-                          <th scope="col" class="border-0">Contato</th>
-                          <th scope="col" class="border-0">E-mail</th>
-                          <th scope="col" class="border-0">Senha</th>
+                          <th scope="col" class="border-0">Cliente</th>
+                          <th scope="col" class="border-0">Modelo</th>
+                          <th scope="col" class="border-0">Fabricante</th>
+                          <th scope="col" class="border-0">Série</th>
+                          <th scope="col" class="border-0">Desc.Problema</th>
+                          <th scope="col" class="border-0">Data</th>
                           <th scope="col" class="border-0">Ação</th>
                         </tr>
                       </thead>
                       <tbody>
+                      <?php
+                            include_once('config/conexao.php');
+                            $select = "SELECT * FROM tbstore ORDER BY idUser";
+                            try{
+                              $resultado = $conect->prepare($select);
+                              $resultado->execute();
+                              $contar = $resultado->rowCount();
+                              if($contar > 0){
+                                while($show = $resultado->FETCH(PDO::FETCH_OBJ)){
+
+                                
+                            
+                            ?>
                         <tr>
-                          <td>1</td>
-                          <td>Ali</td>
-                          <td>Kerry</td>
-                          <td>Russian Federation</td>
-                          <td>Gdańsk</td>
-                          <td>107-0339</td>
+                          <td><?php echo $show->idUser;?></td>
+                          <td><?php echo $show->clientStore;?></td>
+                          <td><?php echo $show->modStore;?></td>
+                          <td><?php echo $show->fabStore;?></td>
+                          <td><?php echo $show->seStore;?></td>
+                          <td><?php echo $show->desStore;?></td>
+                          <td><?php echo $show->data;?></td>
+                          <td>
+                            <a href="user-profile.php?id=<?php echo $show->idUser;?>" title="Editar" class="btn btn-success">Up</a>
+                            <a href="config/delete.php?idDel=<?php echo $show->idUser;?>" title="Remover" class="btn btn-danger" onclick="return confirm('Tem certeza de que quer remover este registro?')">Dn</a>
+                          </td>
                         </tr>
-                        <tr>
-                          <td>2</td>
-                          <td>Clark</td>
-                          <td>Angela</td>
-                          <td>Estonia</td>
-                          <td>Borghetto di Vara</td>
-                          <td>1-660-850-1647</td>
-                        </tr>
-                        <tr>
-                          <td>3</td>
-                          <td>Jerry</td>
-                          <td>Nathan</td>
-                          <td>Cyprus</td>
-                          <td>Braunau am Inn</td>
-                          <td>214-4225</td>
-                        </tr>
-                        <tr>
-                          <td>4</td>
-                          <td>Colt</td>
-                          <td>Angela</td>
-                          <td>Liberia</td>
-                          <td>Bad Hersfeld</td>
-                          <td>1-848-473-7416</td>
-                        </tr>
+                        <?php
+                            
+                                  }
+                                }else{
+                                  echo '<div class="alert alert-danger" role="alert">
+                                          <strong>OPS algo de errado não está certo!</strong>
+                                        </div>';
+                                }
+                              }catch (PDOException $e){
+                                echo "<p>ERRO DE PDO = </p>".$e->getMessage();
+                              }
+                            
+                            ?>
+                        
                       </tbody>
                     </table>
                   </div>

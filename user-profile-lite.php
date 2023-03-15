@@ -18,6 +18,39 @@
     
     
     <div class="container-fluid">
+    <?php
+        include_once('config/conexao.php');
+        if(!isset($_GET['id'])){
+            header("Location: user-profile-lite.php");
+            exit;
+        }
+        $id = filter_input(INPUT_GET,'id',FILTER_DEFAULT);
+
+        $select = "SELECT * FROM tbusers WHERE idUser=:id";
+        try{
+            $resultado = $conect->prepare($select);
+            $resultado->bindParam(':id',$id, PDO::PARAM_INT);
+            $resultado->execute();
+
+            $cont = $resultado->rowCount();
+            if($cont > 0){
+                while($show = $resultado->FETCH(PDO::FETCH_OBJ)){
+                    $id = $show->idUser;
+                    $nomeUp = $show->nameUser;
+                    $username = $show->username;
+                    $emailUp = $show->emailUser;
+                    $passUp = $show->passUser;
+                    $telUp = $show->telUser;
+                }
+            }else{
+                echo '<h5>Ops!</h5>
+                não foi possível editar este perfil !!!';
+            }
+            
+        }catch (PDOException $e){
+            echo"<strong> ERRO DE SELECT NO PDO = </strong>". $e->getMessage();
+          }
+        ?>
       <div class="row">
         <!-- Main Sidebar -->
         <aside class="main-sidebar col-12 col-md-3 col-lg-2 px-0">
@@ -36,26 +69,26 @@
           <div class="nav-wrapper">
             <ul class="nav flex-column">
               <li class="nav-item">
-                <a class="nav-link " href="index.html">
+                <a class="nav-link " href="home.php">
                   <i class="fa-sharp fa-solid fa-house"></i>
                   <span>Página Principal</span>
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link " href="users.html">
-                  <i class="fa-sharp fa-solid fa-users-gear"></i>
+                <a class="nav-link " href="users.php">
+                <i class="fa-sharp fa-solid fa-users"></i>
                   <span>Tablela de Usuários</span>
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link " href="tables.html">
+                <a class="nav-link " href="tables.php">
                   <i class="material-icons">table_chart</i>
                   <span>Tablela de Serviços</span>
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" href="user-profile-lite.html">
-                  <i class="material-icons">person</i>
+                <a class="nav-link active" href="user-profile-lite.php">
+                <i class="fa-sharp fa-solid fa-pen-to-square"></i>
                   <span>Perfil</span>
                 </a>
               </li>
@@ -76,15 +109,15 @@
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle text-nowrap px-3" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                     <img class="user-avatar rounded-circle mr-2" src="images/avatars/0.jpg" alt="User Avatar">
-                    <span class="d-none d-md-inline-block">Sierra Brooks</span>
+                    <span class="d-none d-md-inline-block"><?php echo $nomeUp;?></span>
                   </a>
                   <div class="dropdown-menu dropdown-menu-small">
-                    <a class="dropdown-item" href="user-profile-lite.html">
-                      <i class="material-icons">&#xE7FD;</i> Profile</a>
+                    <!--<a class="dropdown-item" href="user-profile-lite.html">
+                      <i class="material-icons">&#xE7FD;</i> Profile</a>-->
                     
                     
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item text-danger" href="#">
+                    <a class="dropdown-item text-danger" href="?sair">
                       <i class="material-icons text-danger">&#xE879;</i> Logout </a>
                   </div>
                 </li>
@@ -114,8 +147,9 @@
                   <div class="card-header border-bottom text-center">
                     <div class="mb-3 mx-auto">
                       <img class="rounded-circle" src="images/avatars/0.jpg" alt="User Avatar" width="110"> </div>
-                    <h4 class="mb-0">Sierra Brooks</h4>
-                    <span class="text-muted d-block mb-2">Project Manager</span>
+                    <h4 class="mb-0"><?php echo $nomeUp;?></h4>
+                    <span class="text-muted d-block mb-2"><?php echo $username;?></span>
+                    <span class="text-muted d-block mb-2"><?php echo $emailUp;?></span>
                     
                   </div>
                   <ul class="list-group list-group-flush">
@@ -130,55 +164,79 @@
               <div class="col-lg-8">
                 <div class="card card-small mb-4">
                   <div class="card-header border-bottom">
-                    <h6 class="m-0">Account Details</h6>
+                    <h6 class="m-0">Dados do perfil</h6>
                   </div>
                   <ul class="list-group list-group-flush">
                     <li class="list-group-item p-3">
                       <div class="row">
                         <div class="col">
-                          <form>
+                          <form method="post" enctype="multipart/form-data">
                             <div class="form-row">
                               <div class="form-group col-md-6">
-                                <label for="feFirstName">First Name</label>
-                                <input type="text" class="form-control" id="feFirstName" placeholder="First Name" value="Sierra"> </div>
+                                <label for="feFirstName">Nome Completo*</label>
+                                <input type="text" name="nome" class="form-control" id="feFirstName" value="<?php echo $nomeUp?>"> 
+                              </div>
                               <div class="form-group col-md-6">
-                                <label for="feLastName">Last Name</label>
-                                <input type="text" class="form-control" id="feLastName" placeholder="Last Name" value="Brooks"> </div>
+                                <label for="feLastName">Username*</label>
+                                <input type="text" name="username" class="form-control" id="feLastName" value="<?php echo $username?>"> 
+                              </div>
                             </div>
                             <div class="form-row">
                               <div class="form-group col-md-6">
-                                <label for="feEmailAddress">Email</label>
-                                <input type="email" class="form-control" id="feEmailAddress" placeholder="Email" value="sierra@example.com"> </div>
+                                <label for="feEmailAddress">Email*</label>
+                                <input type="email" name="email" class="form-control" id="feEmailAddress" value="<?php echo $emailUp?>"> </div>
                               <div class="form-group col-md-6">
-                                <label for="fePassword">Password</label>
-                                <input type="password" class="form-control" id="fePassword" placeholder="Password"> </div>
+                                <label for="fePassword">Senha*</label>
+                                <input type="password" name="pass" class="form-control" id="fePassword" value="<?php echo $passUp?>"> 
+                              </div>
                             </div>
                             <div class="form-group">
-                              <label for="feInputAddress">Address</label>
-                              <input type="text" class="form-control" id="feInputAddress" placeholder="1234 Main St"> </div>
-                            <div class="form-row">
-                              <div class="form-group col-md-6">
-                                <label for="feInputCity">City</label>
-                                <input type="text" class="form-control" id="feInputCity"> </div>
-                              <div class="form-group col-md-4">
-                                <label for="feInputState">State</label>
-                                <select id="feInputState" class="form-control">
-                                  <option selected>Choose...</option>
-                                  <option>...</option>
-                                </select>
-                              </div>
-                              <div class="form-group col-md-2">
-                                <label for="inputZip">Zip</label>
-                                <input type="text" class="form-control" id="inputZip"> </div>
+                              <label for="feInputAddress">Telefone*</label>
+                              <input type="text" name="tel" class="form-control" onkeypress="$(this).mask('(00) 00000-0000')" id="feInputAddress" value="<?php echo $telUp?>">
                             </div>
+                            
                             <div class="form-row">
                               <div class="form-group col-md-12">
-                                <label for="feDescription">Description</label>
-                                <textarea class="form-control" name="feDescription" rows="5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio eaque, quidem, commodi soluta qui quae minima obcaecati quod dolorum sint alias, possimus illum assumenda eligendi cumque?</textarea>
+                                <label for="feDescription">Foto de Perfil</label>
+                                <input type="file" class="form-control" name="upload">
                               </div>
                             </div>
-                            <button type="submit" class="btn btn-accent">Update Account</button>
+                            <button type="submit" name="btnUp" class="btn btn-accent">Editar</button>
                           </form>
+                          <?php
+                                    include_once('config/conexao.php');
+                                    if(isset($_POST['btnUp'])){
+                                        $nome=$_POST['nome'];
+                                        $username=$_POST['username'];
+                                        $tel=$_POST['tel'];
+                                        $email=$_POST['email'];
+                                        $pass=$_POST['pass'];
+                                        $editar="UPDATE tbusers SET nameUser=:nome,username=:username,emailUser=:email,passUser=:pass,telUser=:tel WHERE idUser=:id";                   
+                                        try {
+                                          $result = $conect->prepare($editar);
+                                          $result->bindParam(':id',$id, PDO::PARAM_INT);
+                                          $result->bindParam(':nome',$nome, PDO::PARAM_STR);
+                                          $result->bindParam(':username',$username, PDO::PARAM_STR);
+                                          $result->bindParam(':tel',$tel, PDO::PARAM_STR);
+                                          $result->bindParam(':email',$email, PDO::PARAM_STR);
+                                          $result->bindParam(':pass',$pass, PDO::PARAM_STR);
+                                          $result->execute();
+                                            
+                                          $contar=$result->rowCount();
+                                          if($contar > 0){
+                                                echo ' <div class="alert alert-success" role="alert">
+                                                        <strong>OK conta editada com sucesso!</strong>
+                                                      </div>';
+                                              }else{
+                                                echo '<div class="alert alert-success" role="alert">
+                                                      <strong>Ops conta não editada!</strong>
+                                                    </div>';
+                                              }                                           
+                                          }catch (PDOException $e){
+                                            echo"<strong> ERRO DE CADASTRO PDO = </strong>". $e->getMessage();
+                                          }
+                                    }
+                                    ?>
                         </div>
                       </div>
                     </li>
@@ -196,8 +254,9 @@
         </main>
       </div>
     </div>
- 
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="scripts/jquery-3.6.3.min.js"></script>
+    <script src="scripts/jQuery-Mask-Plugin-master/dist/jquery.mask.min.js"></script>
+    <!--<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>

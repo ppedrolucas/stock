@@ -1,3 +1,12 @@
+<?php
+ob_start(); //ARMAZENA MEUS DADOS EM CACHE
+session_start(); //INICIA A SESSÃO
+if(!isset($_SESSION['loginUser']) && (!isset($_SESSION['passUser']))){
+    header("Location: index.php?acao=negado");
+    exit;
+}
+include_once('config/sair.php');
+?>
 <!doctype html>
 <html class="no-js h-100" lang="en">
   <head>
@@ -16,6 +25,7 @@
   </head>
   <body class="h-100">
     <div class="container-fluid">
+    
       <div class="row">
         <!-- Main Sidebar -->
         <aside class="main-sidebar col-12 col-md-3 col-lg-2 px-0">
@@ -32,41 +42,28 @@
               </a>
             </nav>
           </div>
-          <form action="#" class="main-sidebar__search w-100 border-right d-sm-flex d-md-none d-lg-none">
-            <div class="input-group input-group-seamless ml-3">
-              <div class="input-group-prepend">
-                <div class="input-group-text">
-                  <i class="fas fa-search"></i>
-                </div>
-              </div>
-              <input class="navbar-search form-control" type="text" placeholder="Search for something..." aria-label="Search"> </div>
-          </form>
+          
           <div class="nav-wrapper">
             <ul class="nav flex-column">
               <li class="nav-item">
-                <a class="nav-link active" href="index.html">
+                <a class="nav-link active" href="home.php">
                   <i class="fa-sharp fa-solid fa-house"></i>
-                  <span>Páginna Principal</span>
+                  <span>Página Principal</span>
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link " href="users.html">
-                  <i class="fa-sharp fa-solid fa-users-gear"></i>
+                <a class="nav-link " href="users.php">
+                <i class="fa-sharp fa-solid fa-users"></i>
                   <span>Tablela de Usuários</span>
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link " href="tables.html">
+                <a class="nav-link " href="tables.php">
                   <i class="material-icons">table_chart</i>
                   <span>Tablela de Serviços</span>
                 </a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="user-profile-lite.html">
-                  <i class="material-icons">person</i>
-                  <span>Perfil</span>
-                </a>
-              </li>
+             
              
             </ul>
           </div>
@@ -88,13 +85,13 @@
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle text-nowrap px-3" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                     <img class="user-avatar rounded-circle mr-2" src="images/avatars/0.jpg" alt="User Avatar">
-                    <span class="d-none d-md-inline-block">Sierra Brooks</span>
+                    <span class="d-none d-md-inline-block">User</span>
                   </a>
                   <div class="dropdown-menu dropdown-menu-small">
-                    <a class="dropdown-item" href="user-profile-lite.html">
-                      <i class="material-icons">&#xE7FD;</i> Profile</a>
+                    <!--<a class="dropdown-item" href="user-profile-lite.php">
+                      <i class="material-icons">&#xE7FD;</i> Profile</a>-->
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item text-danger" href="#">
+                    <a class="dropdown-item text-danger" href="?sair">
                       <i class="material-icons text-danger">&#xE879;</i> Logout </a>
                   </div>
                 </li>
@@ -116,7 +113,7 @@
                 <h3 class="page-title">Budega Da Informática</h3>
               </div>
             </div>
-            <!-- End Page Header -->
+            <!-- Cards -->
             <div class="row">
               <div class="col-lg col-md-6 col-sm-6 mb-4">
                 <div class="stats-small stats-small--1 card card-small">
@@ -183,7 +180,7 @@
                 </div>
               </div>
             </div>
-            <!-- Default Light Table -->
+            <!-- Fim dos cards -->
             <div class="row">
               <div class="col-lg-4">
                 <div class="card card-small mb-4 pt-3">
@@ -194,17 +191,17 @@
                     </div>
                     <ul class="list-group list-group-flush">
                       <li class="list-group-item px-3">
-                        <form>
+                        <form action="" method="post" enctype="multipart/form-data">
 
                           <!-- Input Groups -->
                           <strong class="text-muted d-block mb-2">Dados do cliente</strong>
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">
                               <span class="input-group-text">
-                                <i class="material-icons">person</i>
+                              <i class="fa-sharp fa-solid fa-user"></i>
                               </span>
                             </div>
-                            <input type="text" class="form-control" placeholder="Nome" aria-label="Username" aria-describedby="basic-addon1"> 
+                            <input type="text" name="nome" class="form-control" placeholder="Nome" aria-label="Username" aria-describedby="basic-addon1" required> 
                           </div>
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">
@@ -212,50 +209,77 @@
                                 <i class="fa-solid fa-phone"></i>
                               </span>
                             </div>
-                            <input type="text" class="form-control" placeholder="Telefone para contato" aria-label="" aria-describedby="basic-addon2">
+                            <input type="text" name="tel" class="form-control" placeholder="Telefone para contato" onkeypress="$(this).mask('(00) 00000-0000')" aria-label="" aria-describedby="basic-addon2" required>
                           </div>
-                          <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text">
-                                <i class="fa-sharp fa-solid fa-piggy-bank"></i>
-                              </span>
-                            </div>
-                            <input type="text" class="form-control" placeholder="Orçamento" aria-label="Amount (to the nearest dollar)">
-                          </div>
-                          <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text">
-                                <i class="fa-sharp fa-solid fa-map-location-dot"></i>
-                              </span>
-                            </div>
-                            <input type="text" class="form-control" placeholder="Endereço" aria-label="" aria-describedby="basic-addon2">
-                          </div>
+                        
                           <!-- Input Groups -->
                           <!-- Seamless Input Groups -->
-                          <strong class="text-muted d-block mb-2">Máquina</strong>
+                          <strong class="text-muted d-block mb-2">Informações do computador</strong>
                           <div class="input-group mb-3">
                             <div class="input-group input-group-seamless">
-                              <input type="text" class="form-control" id="form1-username" placeholder="Sintomas"> 
+                              <input type="text" name="modelo" class="form-control" id="form1-username" placeholder="Modelo" required> 
                             </div>
                           </div>
                           <div class="input-group mb-3">
                             <div class="input-group input-group-seamless">
-                              <input type="text" class="form-control" id="form1-username" placeholder="Número de série"> 
+                              <input type="text" name="fab" class="form-control" id="form1-username" placeholder="Fabricante" required> 
                             </div>
                           </div>
                           <div class="input-group mb-3">
                             <div class="input-group input-group-seamless">
-                              <input type="text" class="form-control" id="form1-username" placeholder="Marca"> 
+                              <input type="text" name="serie" class="form-control" id="form1-username" placeholder="Número de Série " required> 
                             </div>
                           </div>
                           <div class="input-group mb-3">
                             <div class="input-group input-group-seamless">
-                              <textarea type="text" class="form-control" id="form1-username" placeholder="Descrição do problema"></textarea>
+                              <textarea type="text" name="descProblem" class="form-control" id="form1-username" placeholder="Descrição do problema e sintomas" required></textarea>
                             </div>
                           </div>
                           
-                            <button type="submit" class="mb-2 btn btn-primary mr-2">Enviar</button>
+                            <button type="submit" name="btnEnviar" class="mb-2 btn btn-primary mr-2">Enviar</button>
                         </form>
+                        <?php
+                        
+                        include_once('config/conexao.php');
+                        
+                        if(isset($_POST['btnEnviar'])) {
+                          $nome=$_POST['nome'];
+                          $tel=$_POST['tel'];
+                          $modelo=$_POST['modelo'];
+                          $fab=$_POST['fab'];
+                          $serie=$_POST['serie'];
+                          $desProblem=$_POST['descProblem'];
+                          $data= date('Y-m-d');
+
+                          $cadastrar = "INSERT INTO tbstore (clientStore,telStore,modStore,fabStore,seStore,desStore,data) VALUES (:nome,:tel,:modelo,:fab,:serie,:descProblem,:data)";
+
+                          try{
+                            $result = $conect->prepare($cadastrar);
+                            $result->bindParam(':nome',$nome, PDO::PARAM_STR);
+                            $result->bindParam(':tel',$tel, PDO::PARAM_STR);
+                            $result->bindParam(':modelo',$modelo, PDO::PARAM_STR);
+                            $result->bindParam(':fab',$fab, PDO::PARAM_STR);
+                            $result->bindParam(':serie',$serie, PDO::PARAM_STR);
+                            $result->bindParam(':descProblem',$desProblem, PDO::PARAM_STR);
+                            $result->bindParam(':data',$data, PDO::PARAM_STR);
+                            $result->execute();
+
+                            $contar=$result->rowCount();
+                            if($contar > 0){
+                              echo '<div class="alert alert-success" role="alert">
+                                      <strong>OK cadastro concluido!</strong>
+                                    </div>';
+                            }else{
+                              echo '<div class="alert alert-danger" role="alert">
+                                      <strong>OPS algo de errado não está certo!</strong>
+                                    </div>';
+                            }
+                          }catch (PDOException $e){
+                            echo "<p>ERRO DE PDO = </p>".$e->getMessage();
+                          }
+                        }
+                        
+                        ?>
                       </li>
                     </ul>
                   
@@ -265,7 +289,7 @@
                 <div class="card card-small mb-4">
               
                       <div class="card-header border-bottom">
-                        <h6 class="m-0">Últimos Registros</h6>
+                        <h6 class="m-0">Últimos Registros - Resumo</h6>
                       </div>
                       <div class="card-body p-0 pb-3 text-center">
                         <table class="table mb-0">
@@ -274,44 +298,46 @@
                               <th scope="col" class="border-0">#</th>
                               <th scope="col" class="border-0">Cliente</th>
                               <th scope="col" class="border-0">Contato</th>
-                              <th scope="col" class="border-0">Máquina</th>
-                              <th scope="col" class="border-0">Serviço</th>
-                              <th scope="col" class="border-0">Orçamento</th>
+                              <th scope="col" class="border-0">Modelo</th>
+                              <th scope="col" class="border-0">Desc.Problema</th>
+                              <th scope="col" class="border-0">Data</th>
                             </tr>
                           </thead>
                           <tbody>
+                            <?php
+                            
+                            $select = "SELECT * FROM tbstore ORDER BY idUser DESC LIMIT 5";
+                            try{
+                              $resultado = $conect->prepare($select);
+                              $resultado->execute();
+                              $contar = $resultado->rowCount();
+                              if($contar > 0){
+                                while($show = $resultado->FETCH(PDO::FETCH_OBJ)){
+
+                                
+                            
+                            ?>
                             <tr>
-                              <td>1</td>
-                              <td>Ali</td>
-                              <td>Kerry</td>
-                              <td>Russian Federation</td>
-                              <td>Gdańsk</td>
-                              <td>107-0339</td>
+                              <td><?php echo $show->idUser;?></td>
+                              <td><?php echo $show->clientStore;?></td>
+                              <td><?php echo $show->telStore;?></td>
+                              <td><?php echo $show->modStore;?></td>
+                              <td><?php echo $show->desStore;?></td>
+                              <td><?php echo $show->data;?></td>
                             </tr>
-                            <tr>
-                              <td>2</td>
-                              <td>Clark</td>
-                              <td>Angela</td>
-                              <td>Estonia</td>
-                              <td>Borghetto di Vara</td>
-                              <td>1-660-850-1647</td>
-                            </tr>
-                            <tr>
-                              <td>3</td>
-                              <td>Jerry</td>
-                              <td>Nathan</td>
-                              <td>Cyprus</td>
-                              <td>Braunau am Inn</td>
-                              <td>214-4225</td>
-                            </tr>
-                            <tr>
-                              <td>4</td>
-                              <td>Colt</td>
-                              <td>Angela</td>
-                              <td>Liberia</td>
-                              <td>Bad Hersfeld</td>
-                              <td>1-848-473-7416</td>
-                            </tr>
+                            <?php
+                            
+                                  }
+                                }else{
+                                  echo '<div class="alert alert-danger" role="alert">
+                                          <strong>OPS algo de errado não está certo!</strong>
+                                        </div>';
+                                }
+                              }catch (PDOException $e){
+                                echo "<p>ERRO DE PDO = </p>".$e->getMessage();
+                              }
+                            
+                            ?>
                           </tbody>
                         </table>
                       </div>
@@ -329,8 +355,9 @@
         </main>
       </div>
     </div>
-    
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="scripts/jquery-3.6.3.min.js"></script>
+    <script src="scripts/jQuery-Mask-Plugin-master/dist/jquery.mask.js"></script>
+    <!--<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
