@@ -20,13 +20,13 @@
     background-color: #fff;
     width: 360px;
     color: #333;
-    padding: 50px;
-    border-radius: 8px;
+    padding: 40px;
+    border-radius: 10px;
 }
 
 h2{
     text-align: center;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
 }
 input{
     color: #333;
@@ -38,27 +38,4 @@ input{
     border: none;
     border-radius: 10px;
 }
-button{
-    border: none;
-    background: #0d6efd;
-    border-radius: 10px;
-    padding: 15px;
-    color: #fff;
-    margin-top: 6px;
-    margin-bottom: 8px;
-    width: 100%;
-}
-button:hover{
-    background: #0b55c4;
-    transition: all .2s ease-out;
-}
-a{
-    text-decoration: none;
-    color: #0d6efd;
-}
-a:hover{
-    color: #0b55c4;
-}
-@media (max-width: 700px){
-    
-}
+

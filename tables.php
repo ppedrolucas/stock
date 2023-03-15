@@ -2,7 +2,7 @@
 ob_start(); //ARMAZENA MEUS DADOS EM CACHE
 session_start(); //INICIA A SESSÃO
 if(!isset($_SESSION['loginUser']) && (!isset($_SESSION['passUser']))){
-    header("Location: users.php?acao=negado");
+    header("Location: index.php?acao=negado");
     exit;
 }
 include_once('config/sair.php');
@@ -154,7 +154,7 @@ include_once('config/sair.php');
                           <td><?php echo $show->desStore;?></td>
                           <td><?php echo $show->data;?></td>
                           <td>
-                            <a href="user-profile.php?id=<?php echo $show->idUser;?>" title="Editar" class="btn btn-success">Up</a>
+                            <a href="update-cpu.php?id=<?php echo $show->idUser;?>" title="Editar" class="btn btn-success">Up</a>
                             <a href="config/delete.php?idDel=<?php echo $show->idUser;?>" title="Remover" class="btn btn-danger" onclick="return confirm('Tem certeza de que quer remover este registro?')">Dn</a>
                           </td>
                         </tr>

@@ -2,7 +2,7 @@
 ob_start(); //ARMAZENA MEUS DADOS EM CACHE
 session_start(); //INICIA A SESSÃO
 if(!isset($_SESSION['loginUser']) && (!isset($_SESSION['passUser']))){
-    header("Location: home.php?acao=negado");
+    header("Location: index.php?acao=negado");
     exit;
 }
 include_once('config/sair.php');
