@@ -1,9 +1,18 @@
+<?php
+ob_start(); //ARMAZENA MEUS DADOS EM CACHE
+session_start(); //INICIA A SESSÃO
+if(!isset($_SESSION['username']) && (!isset($_SESSION['passUser']))){
+    header("Location: index.php?acao=negado");
+    exit;
+}
+include_once('config/sair.php');
+?>
 <!doctype html>
-<html class="no-js h-100" lang="en">
+<html class="no-js h-100" lang="pt-br">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Shards Dashboard Lite - Free Bootstrap Admin Template – DesignRevision</title>
+    <title>Sistema De Estoque | Budega Da Informática</title>
     <meta name="description" content="A high-quality &amp; free Bootstrap admin dashboard template pack that comes with lots of templates and components.">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">

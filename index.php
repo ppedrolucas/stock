@@ -59,7 +59,7 @@ if(isset($_SESSION['username']) && (isset($_SESSION['passUser']))){
 
         if(isset($_GET['acao'])){
           $acao = $_GET['acao'];
-          if($acao=='not'){
+          if($acao=='negado'){
               echo '<div class="alert alert-danger" role="alert">
                           Erro ao acessar o sistema !
                     </div>';

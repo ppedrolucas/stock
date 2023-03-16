@@ -8,7 +8,7 @@ if(!isset($_SESSION['username']) && (!isset($_SESSION['passUser']))){
 include_once('config/sair.php');
 ?>
 <!doctype html>
-<html class="no-js h-100" lang="en">
+<html class="no-js h-100" lang="pt-br">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
