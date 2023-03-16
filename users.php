@@ -1,7 +1,7 @@
 <?php
 ob_start(); //ARMAZENA MEUS DADOS EM CACHE
 session_start(); //INICIA A SESSÃO
-if(!isset($_SESSION['loginUser']) && (!isset($_SESSION['passUser']))){
+if(!isset($_SESSION['username']) && (!isset($_SESSION['passUser']))){
     header("Location: index.php?acao=negado");
     exit;
 }
@@ -82,14 +82,14 @@ include_once('config/sair.php');
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle text-nowrap px-3" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                     <img class="user-avatar rounded-circle mr-2" src="images/avatars/0.jpg" alt="User Avatar">
-                    <span class="d-none d-md-inline-block">Sierra Brooks</span>
+                    <span class="d-none d-md-inline-block"><?php echo $_SESSION['username'];?></span>
                   </a>
                   <div class="dropdown-menu dropdown-menu-small">
-                    <!--<a class="dropdown-item" href="user-profile-lite.html">
-                      <i class="material-icons">&#xE7FD;</i> Profile</a>-->
+                    <a class="dropdown-item" href="perfil.php">
+                      <i class="material-icons">&#xE7FD;</i> Perfil</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item text-danger" href="?sair">
-                      <i class="material-icons text-danger">&#xE879;</i> Logout </a>
+                      <i class="material-icons text-danger">&#xE879;</i> Sair </a>
                   </div>
                 </li>
               </ul>

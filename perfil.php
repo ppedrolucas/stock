@@ -1,9 +1,18 @@
+<?php
+ob_start(); //ARMAZENA MEUS DADOS EM CACHE
+session_start(); //INICIA A SESSÃO
+if(!isset($_SESSION['username']) && (!isset($_SESSION['passUser']))){
+    header("Location: index.php?acao=negado");
+    exit;
+}
+include_once('config/sair.php');
+?>
 <!doctype html>
 <html class="no-js h-100" lang="en">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Shards Dashboard Lite - Free Bootstrap Admin Template – DesignRevision</title>
+    <title>Sistema de Estoque | Edição de Perfil</title>
     <meta name="description" content="A high-quality &amp; free Bootstrap admin dashboard template pack that comes with lots of templates and components.">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
@@ -20,36 +29,37 @@
     <div class="container-fluid">
     <?php
         include_once('config/conexao.php');
-        if(!isset($_GET['id'])){
-            header("Location: user-profile-lite.php");
-            exit;
-        }
-        $id = filter_input(INPUT_GET,'id',FILTER_DEFAULT);
+        $userOnline = $_SESSION['username'];
+        $passOnline = $_SESSION['passUser'];
 
-        $select = "SELECT * FROM tbusers WHERE idUser=:id";
+        $selectOnline = "SELECT * FROM tbusers WHERE username=:userOnline AND passUser=:passOnline";
+
         try{
-            $resultado = $conect->prepare($select);
-            $resultado->bindParam(':id',$id, PDO::PARAM_INT);
-            $resultado->execute();
+              $resultOnline = $conect->prepare($selectOnline);
+              
+              $resultOnline->bindParam(':userOnline',$userOnline, PDO::PARAM_STR);
+              $resultOnline->bindParam(':passOnline',$passOnline, PDO::PARAM_STR);
+              $resultOnline->execute();
 
-            $cont = $resultado->rowCount();
-            if($cont > 0){
-                while($show = $resultado->FETCH(PDO::FETCH_OBJ)){
+              $contar = $resultOnline->rowCount();
+              if($contar > 0){
+                  while($show = $resultOnline->FETCH(PDO::FETCH_OBJ)){
                     $id = $show->idUser;
-                    $nomeUp = $show->nameUser;
-                    $username = $show->username;
-                    $emailUp = $show->emailUser;
-                    $passUp = $show->passUser;
-                    $telUp = $show->telUser;
-                }
-            }else{
-                echo '<h5>Ops!</h5>
-                não foi possível editar este perfil !!!';
+                    $nomeOn = $show->nameUser;
+                    $userOn = $show->username;
+                    $emailOn = $show->emailUser;
+                    $passOn = $show->passUser;
+                    $telOn = $show->telUser;
+                  }
+              }else{
+                '<div class="alert alert-danger" role="alert">
+                            Não deu certo
+                        </div>';
+              }
+
+        }catch(PDOException $e){
+              echo "<strong>ERRO DE LOGIN = </strong>".$e->getMessage();
             }
-            
-        }catch (PDOException $e){
-            echo"<strong> ERRO DE SELECT NO PDO = </strong>". $e->getMessage();
-          }
         ?>
       <div class="row">
         <!-- Main Sidebar -->
@@ -89,7 +99,7 @@
               <li class="nav-item">
                 <a class="nav-link active" href="user-profile-lite.php">
                 <i class="fa-sharp fa-solid fa-pen-to-square"></i>
-                  <span>Edição de registro</span>
+                  <span>Editar Perfil</span>
                 </a>
               </li>
 
@@ -109,7 +119,7 @@
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle text-nowrap px-3" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                     <img class="user-avatar rounded-circle mr-2" src="images/avatars/0.jpg" alt="User Avatar">
-                    <span class="d-none d-md-inline-block"><?php echo $nomeUp;?></span>
+                    <span class="d-none d-md-inline-block"><?php echo $_SESSION['username']?></span>
                   </a>
                   <div class="dropdown-menu dropdown-menu-small">
                     <a class="dropdown-item" href="perfil.php">
@@ -136,7 +146,7 @@
             <div class="page-header row no-gutters py-4">
               <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
                 <span class="text-uppercase page-subtitle">Sistema de estoque</span>
-                <h3 class="page-title">Página de Edição</h3>
+                <h3 class="page-title">Editar Perfil</h3>
               </div>
             </div>
             <!-- End Page Header -->
@@ -147,9 +157,9 @@
                   <div class="card-header border-bottom text-center">
                     <div class="mb-3 mx-auto">
                       <img class="rounded-circle" src="images/avatars/0.jpg" alt="User Avatar" width="110"> </div>
-                    <h4 class="mb-0"><?php echo $nomeUp;?></h4>
-                    <span class="text-muted d-block mb-2"><?php echo $username;?></span>
-                    <span class="text-muted d-block mb-2"><?php echo $emailUp;?></span>
+                    <h4 class="mb-0"><?php echo $nomeOn;?></h4>
+                    <span class="text-muted d-block mb-2"><?php echo $userOn;?></span>
+                    <span class="text-muted d-block mb-2"><?php echo $emailOn;?></span>
                     
                   </div>
                   <ul class="list-group list-group-flush">
@@ -174,25 +184,25 @@
                             <div class="form-row">
                               <div class="form-group col-md-6">
                                 <label for="feFirstName">Nome Completo*</label>
-                                <input type="text" name="nome" class="form-control" id="feFirstName" value="<?php echo $nomeUp?>"> 
+                                <input type="text" name="nome" class="form-control" id="feFirstName" value="<?php echo $nomeOn;?>"> 
                               </div>
                               <div class="form-group col-md-6">
                                 <label for="feLastName">Username*</label>
-                                <input type="text" name="username" class="form-control" id="feLastName" value="<?php echo $username?>"> 
+                                <input type="text" name="username" class="form-control" id="feLastName" value="<?php echo $userOn;?>"> 
                               </div>
                             </div>
                             <div class="form-row">
                               <div class="form-group col-md-6">
                                 <label for="feEmailAddress">Email*</label>
-                                <input type="email" name="email" class="form-control" id="feEmailAddress" value="<?php echo $emailUp?>"> </div>
+                                <input type="email" name="email" class="form-control" id="feEmailAddress" value="<?php echo $emailOn;?>"> </div>
                               <div class="form-group col-md-6">
                                 <label for="fePassword">Senha*</label>
-                                <input type="password" name="pass" class="form-control" id="fePassword" value="<?php echo $passUp?>"> 
+                                <input type="password" name="pass" class="form-control" id="fePassword" value="<?php echo $passOn;?>"> 
                               </div>
                             </div>
                             <div class="form-group">
                               <label for="feInputAddress">Telefone*</label>
-                              <input type="text" name="tel" class="form-control" onkeypress="$(this).mask('(00) 00000-0000')" id="feInputAddress" value="<?php echo $telUp?>">
+                              <input type="text" name="tel" class="form-control" onkeypress="$(this).mask('(00) 00000-0000')" id="feInputAddress" value="<?php echo $telOn;?>">
                             </div>
                             
                             <div class="form-row">

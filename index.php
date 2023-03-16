@@ -74,12 +74,12 @@ if(isset($_SESSION['username']) && (isset($_SESSION['passUser']))){
             $login=$_POST['username'];
             $pass=$_POST['pass'];
 
-            $select="SELECT * FROM tbusers WHERE username=:username AND passUser=:passLogin";
+            $select="SELECT * FROM tbusers WHERE username=:username AND passUser=:passUser";
             try {
               $resultLogin = $conect->prepare($select);
               
               $resultLogin->bindParam(':username',$login, PDO::PARAM_STR);
-              $resultLogin->bindParam(':passLogin',$pass, PDO::PARAM_STR);
+              $resultLogin->bindParam(':passUser',$pass, PDO::PARAM_STR);
               $resultLogin->execute();
   
               $verificar = $resultLogin->rowCount();

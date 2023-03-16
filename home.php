@@ -1,18 +1,18 @@
 <?php
 ob_start(); //ARMAZENA MEUS DADOS EM CACHE
 session_start(); //INICIA A SESSÃO
-if(!isset($_SESSION['loginUser']) && (!isset($_SESSION['passUser']))){
+if(!isset($_SESSION['username']) && (!isset($_SESSION['passUser']))){
     header("Location: index.php?acao=not");
     exit;
 }
 include_once('config/sair.php')
 ?>
 <!doctype html>
-<html class="no-js h-100" lang="en">
+<html class="no-js h-100" lang="pt-br">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Shards Dashboard Lite - Free Bootstrap Admin Template – DesignRevision</title>
+    <title>Sistema De Estoque | Budega Da Informática</title>
     <meta name="description" content="A high-quality &amp; free Bootstrap admin dashboard template pack that comes with lots of templates and components.">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
@@ -85,14 +85,14 @@ include_once('config/sair.php')
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle text-nowrap px-3" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                     <img class="user-avatar rounded-circle mr-2" src="images/avatars/0.jpg" alt="User Avatar">
-                    <span class="d-none d-md-inline-block">User</span>
+                    <span class="d-none d-md-inline-block"><?php echo $_SESSION['username'];?></span>
                   </a>
                   <div class="dropdown-menu dropdown-menu-small">
-                    <!--<a class="dropdown-item" href="user-profile-lite.php">
-                      <i class="material-icons">&#xE7FD;</i> Profile</a>-->
+                    <a class="dropdown-item" href="perfil.php?acao=perfil">
+                      <i class="material-icons">&#xE7FD;</i> Perfil</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item text-danger" href="?sair">
-                      <i class="material-icons text-danger">&#xE879;</i> Logout </a>
+                      <i class="material-icons text-danger">&#xE879;</i> Sair </a>
                   </div>
                 </li>
               </ul>
@@ -113,7 +113,7 @@ include_once('config/sair.php')
                 <h3 class="page-title">Budega Da Informática</h3>
               </div>
             </div>
-            <!-- Cards -->
+            <!-- Cards 
             <div class="row">
               <div class="col-lg col-md-6 col-sm-6 mb-4">
                 <div class="stats-small stats-small--1 card card-small">
@@ -180,7 +180,7 @@ include_once('config/sair.php')
                 </div>
               </div>
             </div>
-            <!-- Fim dos cards -->
+            Fim dos cards -->
             <div class="row">
               <div class="col-lg-4">
                 <div class="card card-small mb-4 pt-3">
