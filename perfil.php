@@ -13,6 +13,7 @@ include_once('config/sair.php');
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>Sistema de Estoque | Edição de Perfil</title>
+    <link rel="website icon" type="png" href="images/php-icon.png">
     <meta name="description" content="A high-quality &amp; free Bootstrap admin dashboard template pack that comes with lots of templates and components.">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
@@ -118,7 +119,7 @@ include_once('config/sair.php');
                 
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle text-nowrap px-3" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                    <img class="user-avatar rounded-circle mr-2" src="images/avatars/0.jpg" alt="User Avatar">
+                    <img class="user-avatar rounded-circle mr-2" src="images/avatars/1.jpg" alt="User Avatar">
                     <span class="d-none d-md-inline-block"><?php echo $_SESSION['username']?></span>
                   </a>
                   <div class="dropdown-menu dropdown-menu-small">
@@ -158,15 +159,17 @@ include_once('config/sair.php');
                     <div class="mb-3 mx-auto">
                       <img class="rounded-circle" src="images/avatars/0.jpg" alt="User Avatar" width="110"> </div>
                     <h4 class="mb-0"><?php echo $nomeOn;?></h4>
-                    <span class="text-muted d-block mb-2"><?php echo $userOn;?></span>
-                    <span class="text-muted d-block mb-2"><?php echo $emailOn;?></span>
                     
                   </div>
                   <ul class="list-group list-group-flush">
                    
                     <li class="list-group-item p-4">
-                      <strong class="text-muted d-block mb-2">Description</strong>
-                      <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio eaque, quidem, commodi soluta qui quae minima obcaecati quod dolorum sint alias, possimus illum assumenda eligendi cumque?</span>
+                      <strong class="text-muted d-block mb-2">Mantenha o Perfil atualizado</strong>
+                      <span class="text-muted d-block mb-2"><?php echo $userOn;?></span>
+                      <span class="text-muted d-block mb-2"><?php echo $nomeOn;?></span>
+                      <span class="text-muted d-block mb-2"><?php echo $emailOn;?></span>
+                      <span class="text-muted d-block mb-2"><?php echo $passOn;?></span>
+                      <span class="text-muted d-block mb-2"><?php echo $telOn;?></span>
                     </li>
                   </ul>
                 </div>

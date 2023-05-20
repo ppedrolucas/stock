@@ -22,6 +22,7 @@
     color: #333;
     padding: 40px;
     border-radius: 10px;
+    box-shadow: 0 10px 40px #333;
 }
 
 h2{

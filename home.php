@@ -13,6 +13,7 @@ include_once('config/sair.php')
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>Sistema De Estoque | Budega Da Informática</title>
+    <link rel="website icon" type="png" href="images/php-icon.png">
     <meta name="description" content="A high-quality &amp; free Bootstrap admin dashboard template pack that comes with lots of templates and components.">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
@@ -84,7 +85,7 @@ include_once('config/sair.php')
                 
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle text-nowrap px-3" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                    <img class="user-avatar rounded-circle mr-2" src="images/avatars/0.jpg" alt="User Avatar">
+                    <img class="user-avatar rounded-circle mr-2" src="images/avatars/1.jpg" alt="User Avatar">
                     <span class="d-none d-md-inline-block"><?php echo $_SESSION['username'];?></span>
                   </a>
                   <div class="dropdown-menu dropdown-menu-small">
@@ -267,7 +268,7 @@ include_once('config/sair.php')
                             $contar=$result->rowCount();
                             if($contar > 0){
                               echo '<div class="alert alert-success" role="alert">
-                                      <strong>OK cadastro concluido!</strong>
+                                      <strong>OK Registro concluído!</strong>
                                     </div>';
                             }else{
                               echo '<div class="alert alert-danger" role="alert">

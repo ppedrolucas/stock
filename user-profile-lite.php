@@ -13,6 +13,7 @@ include_once('config/sair.php');
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>Sistema De Estoque | Budega Da Informática</title>
+    <link rel="website icon" type="png" href="images/php-icon.png">
     <meta name="description" content="A high-quality &amp; free Bootstrap admin dashboard template pack that comes with lots of templates and components.">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
@@ -117,8 +118,8 @@ include_once('config/sair.php');
                 
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle text-nowrap px-3" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                    <img class="user-avatar rounded-circle mr-2" src="images/avatars/0.jpg" alt="User Avatar">
-                    <span class="d-none d-md-inline-block"><?php echo $nomeUp;?></span>
+                    <img class="user-avatar rounded-circle mr-2" src="images/avatars/1.jpg" alt="User Avatar">
+                    <span class="d-none d-md-inline-block"><?php echo $_SESSION['username'];?></span>
                   </a>
                   <div class="dropdown-menu dropdown-menu-small">
                     <a class="dropdown-item" href="perfil.php">
@@ -145,7 +146,7 @@ include_once('config/sair.php');
             <div class="page-header row no-gutters py-4">
               <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
                 <span class="text-uppercase page-subtitle">Sistema de estoque</span>
-                <h3 class="page-title">Página de Edição</h3>
+                <h3 class="page-title">Página de Edição de Usuários</h3>
               </div>
             </div>
             <!-- End Page Header -->
@@ -155,17 +156,20 @@ include_once('config/sair.php');
                 <div class="card card-small mb-4 pt-3">
                   <div class="card-header border-bottom text-center">
                     <div class="mb-3 mx-auto">
-                      <img class="rounded-circle" src="images/avatars/0.jpg" alt="User Avatar" width="110"> </div>
+                      <img class="rounded-circle" src="images/avatars/1.jpg" alt="User Avatar" width="110"> </div>
                     <h4 class="mb-0"><?php echo $nomeUp;?></h4>
-                    <span class="text-muted d-block mb-2"><?php echo $username;?></span>
-                    <span class="text-muted d-block mb-2"><?php echo $emailUp;?></span>
+                    
                     
                   </div>
                   <ul class="list-group list-group-flush">
                    
                     <li class="list-group-item p-4">
-                      <strong class="text-muted d-block mb-2">Description</strong>
-                      <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio eaque, quidem, commodi soluta qui quae minima obcaecati quod dolorum sint alias, possimus illum assumenda eligendi cumque?</span>
+                      <strong class="text-muted d-block mb-2">Mantenha o Perfil atualizado</strong>
+                      <span class="text-muted d-block mb-2"><?php echo $username;?></span>
+                      <span class="text-muted d-block mb-2"><?php echo $nomeUp;?></span>
+                      <span class="text-muted d-block mb-2"><?php echo $emailUp;?></span>
+                      <span class="text-muted d-block mb-2"><?php echo $passUp;?></span>
+                      <span class="text-muted d-block mb-2"><?php echo $telUp;?></span>
                     </li>
                   </ul>
                 </div>
@@ -204,12 +208,12 @@ include_once('config/sair.php');
                               <input type="text" name="tel" class="form-control" onkeypress="$(this).mask('(00) 00000-0000')" id="feInputAddress" value="<?php echo $telUp?>">
                             </div>
                             
-                            <div class="form-row">
+                           <!-- <div class="form-row">
                               <div class="form-group col-md-12">
                                 <label for="feDescription">Foto de Perfil</label>
-                                <input type="file" class="form-control" name="upload">
+                                <input type="file" name="upload" class="form-control">
                               </div>
-                            </div>
+                            </div>-->
                             <button type="submit" name="btnUp" class="btn btn-accent">Editar</button>
                           </form>
                           <?php
