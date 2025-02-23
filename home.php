@@ -237,7 +237,7 @@ include_once('config/sair.php')
                             </div>
                           </div>
                           
-                            <button type="submit" name="btnEnviar" class="mb-2 btn btn-primary mr-2">Enviar</button>
+                            <button type="submit" name="btnEnviar" class="mb-3 btn btn-primary mr-2">Enviar</button>
                         </form>
                         <?php
                         
@@ -267,11 +267,11 @@ include_once('config/sair.php')
 
                             $contar=$result->rowCount();
                             if($contar > 0){
-                              echo '<div class="alert alert-success" role="alert">
+                              echo '<div class="alert alert-success rounded" role="alert">
                                       <strong>OK Registro concluído!</strong>
                                     </div>';
                             }else{
-                              echo '<div class="alert alert-danger" role="alert">
+                              echo '<div class="alert alert-danger rounded" role="alert">
                                       <strong>OPS algo de errado não está certo!</strong>
                                     </div>';
                             }

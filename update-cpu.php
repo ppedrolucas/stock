@@ -213,7 +213,7 @@ if(!isset($_SESSION['username']) && (!isset($_SESSION['passUser']))){
                                 <input type="text" name="descProblem" class="form-control" value="<?php echo $desUp?>">
                               </div>
                             </div>
-                            <button type="submit" name="btnUp" class="btn btn-accent">Editar</button>
+                            <button type="submit" name="btnUp" class="btn btn-accent mb-3">Editar</button>
                           </form>
                           <?php
                                     include_once('config/conexao.php');
@@ -239,11 +239,11 @@ if(!isset($_SESSION['username']) && (!isset($_SESSION['passUser']))){
                                             
                                           $contar=$result->rowCount();
                                           if($contar > 0){
-                                                echo ' <div class="alert alert-success" role="alert">
+                                                echo ' <div class="alert alert-success rounded" role="alert">
                                                         OK registro editado com sucesso!
                                                       </div>';
                                               }else{
-                                                echo '<div class="alert alert-success" role="alert">
+                                                echo '<div class="alert alert-success rounded" role="alert">
                                                       Ops registro não editado!
                                                     </div>';
                                               }                                           

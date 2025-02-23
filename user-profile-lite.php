@@ -214,7 +214,7 @@ include_once('config/sair.php');
                                 <input type="file" name="upload" class="form-control">
                               </div>
                             </div>-->
-                            <button type="submit" name="btnUp" class="btn btn-accent">Editar</button>
+                            <button type="submit" name="btnUp" class="btn btn-accent mb-3">Editar</button>
                           </form>
                           <?php
                                     include_once('config/conexao.php');
@@ -237,11 +237,11 @@ include_once('config/sair.php');
                                             
                                           $contar=$result->rowCount();
                                           if($contar > 0){
-                                                echo ' <div class="alert alert-success" role="alert">
+                                                echo ' <div class="alert alert-success rounded" role="alert">
                                                         <strong>OK conta editada com sucesso!</strong>
                                                       </div>';
                                               }else{
-                                                echo '<div class="alert alert-danger" role="alert">
+                                                echo '<div class="alert alert-danger rounded" role="alert">
                                                       <strong>Ops conta não editada!</strong>
                                                     </div>';
                                               }                                           
