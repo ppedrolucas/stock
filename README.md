@@ -10,10 +10,9 @@ Este é um projeto Web para controle e getão de estoque tematizado para uma ass
 
 ## 🚀 Tecnologias
 
-- HTML
-- CSS
-- PHP
-- JavaScript
-- Bootstrap
-- Git e Github
+<p align="center">
+  <a href="https://skillicons.dev">
+    <img src="https://skillicons.dev/icons?i=bootstrap,jquery,js,php,scss,css,html,git,github" />
+  </a>
+</p>
 
